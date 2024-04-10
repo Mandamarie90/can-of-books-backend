@@ -6,19 +6,19 @@ try {
     await Book.create({
       title: "20000 Leagues Under the Sea",
       description: "Captain Nemo does stuff",
-      status: "available"
+      availability: "available"
     });
 
     await Book.create({
       title: "Fourth Wing",
       description: "War...but at SCHOOL",
-      status: "unavailable"
+      availability: "unavailable"
     });
 
     await Book.create({
       title: "Never Split the Difference",
       description: "Money $$$$$$$$$$$",
-      status: "checkedOut"
+      availability: "checkedOut"
     });
 } catch (error) {
   response.status(500).json({ message: error.message });
