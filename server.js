@@ -7,6 +7,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
+app.use(express.json());
 app.use(cors());
 
 const PORT = process.env.PORT || 3000;
@@ -42,19 +43,21 @@ app.use((error, request, response, next) => {
 
 async function handleCreateBooks(request, response) {
   let book = request.body;
-  try {
+  console.log('book:', book);
+  // try {
     let newBook = await Book.create(book);
     response.json(newBook);
-  }
-  catch(error){
-    response.status(500).json({message: error.mesage})
-  }
+  // }
+  // catch(error){
+  //   response.status(500).json({message: error.mesage})
+  // }
 }
 
-async function handleDeleteBooks(request,responese){
+async function handleDeleteBooks(request,response){
 try {
   let id = request.params.id;
-  let deletedBook= await Book.findByIdAndDelete(id);
+  console.log('ID:', id);
+  let deletedBook = await Book.findByIdAndDelete(id);
   if (!deleteBook) {
     return response.status(404).json({message: "Book not found"});
   }

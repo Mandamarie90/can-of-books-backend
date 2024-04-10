@@ -11,7 +11,7 @@ const bookSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  status: {
+  availability: {
     type: String,
     enum: ['available', 'checkedOut', 'unavailable'],
     default: 'available'
