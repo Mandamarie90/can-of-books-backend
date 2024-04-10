@@ -51,7 +51,7 @@ async function handleCreateBooks(request, response) {
   }
 }
 
-async function handleDeleteBooks(request,responese){
+async function handleDeleteBooks(request,response){
 try {
   let id = request.params.id;
   let deletedBook= await Book.findByIdAndDelete(id);
