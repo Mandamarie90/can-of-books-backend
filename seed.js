@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bookSchema = require('./mongo-schema');
 
 bookSchema.statics.seed = async function() {
-
+try {
     await Book.create({
       title: "20000 Leagues Under the Sea",
       description: "Captain Nemo does stuff",
@@ -20,6 +20,9 @@ bookSchema.statics.seed = async function() {
       description: "Money $$$$$$$$$$$",
       status: "checkedOut"
     });
+} catch (error) {
+  response.status(500).json({ message: error.message });
+}
 }
 
 bookSchema.statics.clear = async function() {

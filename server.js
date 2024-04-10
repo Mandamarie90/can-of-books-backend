@@ -28,6 +28,9 @@ app.get('/books', handleGetBooks);
 app.get('/books/seed', seedDatabase);
 app.get('/books/nuke', emptyDatabase);
 
+app.post('/books', handleCreateBooks);
+app.delete('/books/:id', handleDeleteBooks);
+
 app.get('*', (request, response) => {
   response.status(404).json({message: 'Not Found'});
 });
@@ -36,6 +39,30 @@ app.use((error, request, response, next) => {
   console.error(error);
   response.status(500).json({message: 'Internal Server Error'});
 });
+
+async function handleCreateBooks(request, response) {
+  let book = request.body;
+  try {
+    let newBook = await Book.create(book);
+    response.json(newBook);
+  }
+  catch(error){
+    response.status(500).json({message: error.mesage})
+  }
+}
+
+async function handleDeleteBooks(request,responese){
+try {
+  let id = request.params.id;
+  let deletedBook= await Book.findByIdAndDelete(id);
+  if (!deleteBook) {
+    return response.status(404).json({message: "Book not found"});
+  }
+  response.json({message: "Book delete successfully",deletedBook});
+} catch (error) {
+  response.status(500).json({message: error.message});
+}
+}
 
 async function handleGetBooks(request, response) {
   let filterQuery = {};
