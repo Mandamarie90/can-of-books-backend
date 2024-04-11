@@ -67,7 +67,7 @@ try {
   let id = request.params.id;
   console.log('ID:', id);
   let deletedBook = await Book.findByIdAndDelete(id);
-  if (!deleteBook) {
+  if (!deletedBook) {
     return response.status(404).json({message: "Book not found"});
   }
   response.json({message: "Book delete successfully",deletedBook});
