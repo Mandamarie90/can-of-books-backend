@@ -31,6 +31,8 @@ app.get('/books/nuke', emptyDatabase);
 
 app.post('/books', handleCreateBooks);
 app.delete('/books/:id', handleDeleteBooks);
+app.put('/books/:id', handleUpdateBooks);
+
 
 app.get('*', (request, response) => {
   response.status(404).json({message: 'Not Found'});
@@ -44,13 +46,20 @@ app.use((error, request, response, next) => {
 async function handleCreateBooks(request, response) {
   let book = request.body;
   console.log('book:', book);
-  // try {
+  try {
     let newBook = await Book.create(book);
     response.json(newBook);
-  // }
-  // catch(error){
-  //   response.status(500).json({message: error.mesage})
-  // }
+  }
+  catch(error){
+    response.status(500).json({message: error.mesage})
+  }
+}
+
+async function handleUpdateBooks(request,response) {
+  let id= request.params.id;
+  let bookToUpdate = request.body;
+  let updatedBook = await Book.findByIdAndUpdate (id, bookToUpdate);
+  response.json(updatedBook);
 }
 
 async function handleDeleteBooks(request,response){
@@ -58,7 +67,7 @@ try {
   let id = request.params.id;
   console.log('ID:', id);
   let deletedBook = await Book.findByIdAndDelete(id);
-  if (!deleteBook) {
+  if (!deletedBook) {
     return response.status(404).json({message: "Book not found"});
   }
   response.json({message: "Book delete successfully",deletedBook});
